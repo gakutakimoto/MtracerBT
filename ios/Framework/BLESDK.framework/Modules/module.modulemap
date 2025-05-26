@@ -1,0 +1,6 @@
+framework module BLESDK {
+  umbrella header "BLESDK.h"
+
+  export *
+  module * { export * }
+}

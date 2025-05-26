@@ -1,0 +1,92 @@
+class MTSwingHeaderDataEntity {
+  late int index;
+  late bool isBroken;
+  late String swingInfoId;
+  late String userId;
+  late String serialNo;
+  late int fwMajorVersion;
+  late int fwMinorVersion;
+  late int fwPatchVersion;
+  late int dataVersion;
+  late int algMajorVersion;
+  late int algMinorVersion;
+  late String swingDate;
+  late int timeZoneOffset;
+  late int dst;
+  late int swingDateAccuracy;
+  late int profileGender;
+  late double profileHeight;
+  late int profileBirthYear;
+  late int profileBirthMonth;
+  late int profileBirthDay;
+  late double clubLength;
+  late double clubFaceAngle;
+  late double clubLieAngle;
+  late double clubLoftAngle;
+  late int clubShaftHardness;
+  late int clubMakerId;
+  late String clubId;
+  late int swingType;
+
+  MTSwingHeaderDataEntity() {
+    index = 0;
+    isBroken = false;
+    swingInfoId = "";
+    userId = "";
+    serialNo = "";
+    fwMajorVersion = 0;
+    fwMinorVersion = 0;
+    fwPatchVersion = 0;
+    dataVersion = 0;
+    algMajorVersion = 0;
+    algMinorVersion = 0;
+    swingDate = "";
+    timeZoneOffset = 0;
+    dst = 0;
+    swingDateAccuracy = 0;
+    profileGender = 0;
+    profileHeight = 0.0;
+    profileBirthYear = 0;
+    profileBirthMonth = 0;
+    profileBirthDay = 0;
+    clubLength = 0.0;
+    clubFaceAngle = 0.0;
+    clubLieAngle = 0.0;
+    clubLoftAngle = 0.0;
+    clubShaftHardness = 0;
+    clubMakerId = 0;
+    clubId = "";
+    swingType = 0;
+  }
+
+  MTSwingHeaderDataEntity.fromMap(final Map<String, dynamic> map) {
+    index = map.containsKey("index") ? int.parse(map["index"].toString()) : 0;
+    isBroken = map.containsKey("isBroken") ? map["isBroken"] : false;
+    swingInfoId = map.containsKey("swingInfoId") ? map["swingInfoId"] : "";
+    userId = map.containsKey("userId") ? map["userId"] : "";
+    serialNo = map.containsKey("serialNo") ? map["serialNo"] : "";
+    fwMajorVersion = map.containsKey("fwMajorVersion") ? int.parse(map["fwMajorVersion"].toString()) : 0;
+    fwMinorVersion = map.containsKey("fwMinorVersion") ? int.parse(map["fwMinorVersion"].toString()) : 0;
+    fwPatchVersion = map.containsKey("fwPatchVersion") ? int.parse(map["fwPatchVersion"].toString()) : 0;
+    dataVersion = map.containsKey("dataVersion") ? int.parse(map["dataVersion"].toString()) : 0;
+    algMajorVersion = map.containsKey("algMajorVersion") ? int.parse(map["algMajorVersion"].toString()) : 0;
+    algMinorVersion = map.containsKey("algMinorVersion") ? int.parse(map["algMinorVersion"].toString()) : 0;
+    swingDate = map.containsKey("swingDate") ? map["swingDate"] : "";
+    timeZoneOffset = map.containsKey("timeZoneOffset") ? int.parse(map["timeZoneOffset"].toString()) : 0;
+    dst = map.containsKey("dst") ? int.parse(map["dst"].toString()) : 0;
+    swingDateAccuracy = map.containsKey("swingDateAccuracy") ? int.parse(map["swingDateAccuracy"].toString()) : 0;
+    profileGender = map.containsKey("profileGender") ? int.parse(map["profileGender"].toString()) : 0;
+    profileHeight = map.containsKey("profileHeight") ? double.parse(map["profileHeight"].toString()) : 0.0;
+    profileBirthYear = map.containsKey("profileBirthYear") ? int.parse(map["profileBirthYear"].toString()) : 0;
+    profileBirthMonth = map.containsKey("profileBirthMonth") ? int.parse(map["profileBirthMonth"].toString()) : 0;
+    profileBirthDay = map.containsKey("profileBirthDay") ? int.parse(map["profileBirthDay"].toString()) : 0;
+    clubLength = map.containsKey("clubLength") ? double.parse(map["clubLength"].toString()) : 0.0;
+    clubFaceAngle = map.containsKey("clubFaceAngle") ? double.parse(map["clubFaceAngle"].toString()) : 0.0;
+    clubLieAngle = map.containsKey("clubLieAngle") ? double.parse(map["clubLieAngle"].toString()) : 0.0;
+    clubLoftAngle = map.containsKey("clubLoftAngle") ? double.parse(map["clubLoftAngle"].toString()) : 0.0;
+    clubShaftHardness = map.containsKey("clubShaftHardness") ? int.parse(map["clubShaftHardness"].toString()) : 0;
+    clubMakerId = map.containsKey("clubMakerId") ? int.parse(map["clubMakerId"].toString()) : 0;
+    clubId = map.containsKey("clubId") ? map["clubId"] : "";
+    swingType = map.containsKey("swingType") ? int.parse(map["swingType"].toString()) : 0;
+  }
+}

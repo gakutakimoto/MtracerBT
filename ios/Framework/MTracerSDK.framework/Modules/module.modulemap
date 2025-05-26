@@ -1,0 +1,11 @@
+framework module MTracerSDK {
+  umbrella header "MTracerSDK-umbrella.h"
+
+  export *
+  module * { export * }
+}
+
+module MTracerSDK.Swift {
+    header "MTracerSDK-Swift.h"
+    requires objc
+}

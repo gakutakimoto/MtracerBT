@@ -1,0 +1,6 @@
+framework module S811Algorithm {
+  umbrella header "S811Algorithm.h"
+
+  export *
+  module * { export * }
+}

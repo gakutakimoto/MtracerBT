@@ -1,0 +1,4 @@
+enum SwingStatusType {
+  enable,
+  disable,
+}

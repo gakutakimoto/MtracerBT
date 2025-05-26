@@ -1,0 +1,4 @@
+enum DominantHandType {
+  left,
+  right,
+}
