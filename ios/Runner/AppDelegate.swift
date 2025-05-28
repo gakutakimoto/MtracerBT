@@ -3,6 +3,7 @@ import Flutter
 import CoreNFC
 import MTracerSDK
 import Hydra
+import Foundation
 
 private enum EventSinkStartScan :String {
     case start
@@ -958,58 +959,28 @@ public class FluffView : NSObject, FlutterPlatformView {
             guard let eventSinkSwingInfo = self.eventSinkSwingInfo else {
                 return
             }
-            
-            var json = "{"
-            json.append(#""isExist":"#)
-            json.append(String(isExist))
-            json.append(#","#)
-            json.append(#""impactId":""#)
-            json.append(String(impactId))
-            json.append(#"","#)
-            json.append(#""index":"#)
-            json.append(String(index))
-            json.append(#","#)
-            json.append(#""hs":"#)
-            json.append(String(format: "%.1f", index))
-            json.append(#","#)
-            json.append(#""angle1":"#)
-            json.append(String(format: "%.1f", 0.0))
-            json.append(#","#)
-            json.append(#""angle2":"#)
-            json.append(String(format: "%.1f", 0.0))
-            json.append(#","#)
-            json.append(#""angle3":"#)
-            json.append(String(format: "%.1f", 0.0))
-            json.append(#"}"#)
-            
+
             mt.readSwingInfo(dateTimeInfo: dateTimeInfo, vendorId: "Q4930jb7ESZugqMNmFVAbVILayY2", userId: userId, index: index,weight: 65.6, averageScore: 100, addressFaceAngleAdjustType: addressFaceAngleAdjustType, callback: { (progress) -> Void in
                 debugPrint(String(progress) + "%")
             }).then({ (swingInfo) in
-                var json = "{"
-                json.append(#""isExist":"#)
-                json.append(String(isExist))
-                json.append(#","#)
-                json.append(#""impactId":""#)
-                json.append(String(impactId))
-                json.append(#"","#)
-                json.append(#""index":"#)
-                json.append(String(index))
-                json.append(#","#)
-                json.append(#""hs":"#)
-                json.append(String(format: "%.1f", swingInfo.measurementInfo.impactHeadSpeed))
-                json.append(#","#)
-                json.append(#""angle1":"#)
-                json.append(String(format: "%.1f", swingInfo.measurementInfo.impactFaceAngle))
-                json.append(#","#)
-                json.append(#""angle2":"#)
-                json.append(String(format: "%.1f", swingInfo.measurementInfo.impactClubPath))
-                json.append(#","#)
-                json.append(#""angle3":"#)
-                json.append(String(format: "%.1f", swingInfo.measurementInfo.impactAttackAngle))
-                json.append(#"}"#)
-
-                debugPrint(json)
-                eventSinkSwingInfo(json)
+                let message = SwingInfoMessage(
+                    isExist: isExist,
+                    impactId: impactId,
+                    index: index,
+                    hs: swingInfo.measurementInfo.impactHeadSpeed,
+                    angle1: swingInfo.measurementInfo.impactFaceAngle,
+                    angle2: swingInfo.measurementInfo.impactClubPath,
+                    angle3: swingInfo.measurementInfo.impactAttackAngle
+                )
+                do {
+                    let data = try JSONEncoder().encode(message)
+                    if let json = String(data: data, encoding: .utf8) {
+                        debugPrint(json)
+                        eventSinkSwingInfo(json)
+                    }
+                } catch {
+                    eventSinkSwingInfo("ERR.JSON")
+                }
             }).catch({ (error) in
                 debugPrint("error")
                 eventSinkSwingInfo(self.errorToString(error: error))
@@ -1062,37 +1033,26 @@ public class FluffView : NSObject, FlutterPlatformView {
             guard let eventSink70Sec = self.eventSink70Sec else {
                 return
             }
-            
+
             async({ (_) in
                 do {
                     let swingInfo = try Hydra.await(mt.readSwingInfo(dateTimeInfo: dateTimeInfo, vendorId: "Q4930jb7ESZugqMNmFVAbVILayY2", userId: userId, index: index, weight: 65.6, averageScore: 100, addressFaceAngleAdjustType: addressFaceAngleAdjustType, callback: { (_) -> Void in }))
                     swingInfo.toFile(for: .documentDirectory)
                     let _ = try Hydra.await(mt.writeUploadFlag(dateTimeInfo: dateTimeInfo, userId: userId, index: index))
-                    
-                    var json = "{"
-                    json.append(#""isExist":"#)
-                    json.append(String(isExist))
-                    json.append(#","#)
-                    json.append(#""impactId":""#)
-                    json.append(String(impactId))
-                    json.append(#"","#)
-                    json.append(#""index":"#)
-                    json.append(String(index))
-                    json.append(#","#)
-                    json.append(#""hs":"#)
-                    json.append(String(format: "%.1f", swingInfo.measurementInfo.impactHeadSpeed))
-                    json.append(#","#)
-                    json.append(#""angle1":"#)
-                    json.append(String(format: "%.1f", swingInfo.measurementInfo.impactFaceAngle))
-                    json.append(#","#)
-                    json.append(#""angle2":"#)
-                    json.append(String(format: "%.1f", swingInfo.measurementInfo.impactClubPath))
-                    json.append(#","#)
-                    json.append(#""angle3":"#)
-                    json.append(String(format: "%.1f", swingInfo.measurementInfo.impactAttackAngle))
-                    json.append(#"}"#)
-                    
-                    eventSink70Sec(json)
+
+                    let message = SwingInfoMessage(
+                        isExist: isExist,
+                        impactId: impactId,
+                        index: index,
+                        hs: swingInfo.measurementInfo.impactHeadSpeed,
+                        angle1: swingInfo.measurementInfo.impactFaceAngle,
+                        angle2: swingInfo.measurementInfo.impactClubPath,
+                        angle3: swingInfo.measurementInfo.impactAttackAngle
+                    )
+                    if let data = try? JSONEncoder().encode(message),
+                       let json = String(data: data, encoding: .utf8) {
+                        eventSink70Sec(json)
+                    }
                 } catch {
                     debugPrint("catch")
                 }
